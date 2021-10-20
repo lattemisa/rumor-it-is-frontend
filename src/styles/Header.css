@@ -1,0 +1,12 @@
+div {
+  background-color: #00372d;
+}
+h1 {
+  display: inline;
+  justify-content: center;
+  background-color: #00372d;
+  color: white;
+}
+.Header__rumor {
+  font-weight: 400;
+}

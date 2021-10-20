@@ -1,0 +1,71 @@
+.Articles__article_card {
+  background-color: white;
+}
+.Articles__topicAndFilter {
+  background-color: rgb(8, 51, 37);
+  display: grid;
+  grid-template-columns: 4fr 1fr 1fr;
+  grid-template-rows: auto;
+  grid-template-areas: "header" "filter";
+}
+
+.Articles__topicDescription {
+  grid-area: "header";
+  text-align: left;
+  color: white;
+}
+
+.Articles__topicFilterBar {
+  grid-area: "filter";
+  padding: 10px;
+  border-radius: 4px;
+  transition-duration: 0.4s;
+  font-size: 12px;
+  background-color: white;
+  border: none;
+  justify-content: center;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.Articles__card {
+  text-decoration: none;
+  margin-top: 20px;
+  grid-area: "articleCard";
+  background-color: #43605b;
+  display: grid;
+  grid-template-columns: 5fr 1fr;
+  grid-template-areas:
+    "title" "votes"
+    "date" "date"
+    "body" "comment-count";
+}
+.Articles__card:hover {
+  background-color: #43605b;
+}
+.Articles__card:visited {
+  background-color: #697976;
+  color: #5a5f5e;
+}
+.Articles__title {
+  grid-area: "title";
+  text-align: left;
+}
+
+.Articles__votingButton {
+  grid-area: "votes";
+}
+.Articles__dateAndAuthor {
+  grid-area: "date";
+  text-align: justify;
+}
+.Articles__body {
+  grid-area: "body";
+  color: black;
+  text-align: left;
+}
+
+.Articles__commentCount {
+  grid-area: "comment-count";
+}
