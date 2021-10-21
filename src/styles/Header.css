@@ -1,10 +1,10 @@
-div {
-  background-color: #00372d;
+.Header_header {
+  background-color: #264653;
 }
 h1 {
   display: inline;
   justify-content: center;
-  background-color: #00372d;
+  background-color: #264653;
   color: white;
 }
 .Header__rumor {

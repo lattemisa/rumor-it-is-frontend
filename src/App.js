@@ -4,14 +4,13 @@ import Header from "./components/Header";
 import Nav from "./components/Nav";
 import Articles from "./components/Articles";
 import LoginPopUp from "./components/LoginPopUp";
-import { useContext, useState } from "react";
-import { UserContext } from "./context/User";
+import { useState } from "react";
 import Logout from "./components/Logout";
 import SingleArticle from "./components/SingleArticle";
 
 function App() {
-  const { isLoggedIn } = useContext(UserContext);
   const [topics, setTopics] = useState([]);
+
   return (
     <BrowserRouter>
       <div className="App">

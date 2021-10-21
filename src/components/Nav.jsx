@@ -5,7 +5,7 @@ import { UserContext } from "../context/User";
 import "../styles/Nav.css";
 
 const Nav = ({ topics, setTopics }) => {
-  const { isLoggedIn, setUser, user } = useContext(UserContext);
+  const { isLoggedIn, setUser, logout } = useContext(UserContext);
 
   useEffect(() => {
     getTopics().then((topics) => {
@@ -29,15 +29,17 @@ const Nav = ({ topics, setTopics }) => {
         <>
           <Link to="/logout">
             <button
+              className="Nav__buttons"
               onClick={() => {
                 setUser(null);
+                logout();
               }}
             >
               Log Out
             </button>{" "}
           </Link>
           <Link to="/articles/user">
-            <button>
+            <button className="Nav__buttons">
               <img
                 className="Article__userImage"
                 src="https://static.independent.co.uk/s3fs-public/thumbnails/image/2020/05/01/08/avatar-sigourney-weaver.jpg"
@@ -48,7 +50,7 @@ const Nav = ({ topics, setTopics }) => {
         </>
       ) : (
         <Link to="/login">
-          <button>Log In</button>
+          <button className="Nav__buttons">Log In</button>
         </Link>
       )}
     </nav>

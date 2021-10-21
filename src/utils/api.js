@@ -46,3 +46,8 @@ export const postComment = async (article_id, username, body) => {
   });
   return response;
 };
+
+export const deleteComment = async (comment_id) => {
+  const response = await rumorItIsApi.delete(`articles/${comment_id}`);
+  return response;
+};

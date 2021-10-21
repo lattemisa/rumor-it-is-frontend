@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { getArticles } from "../utils/api";
 import "../styles/Articles.css";
 import { adjustDate } from "../utils/dataManipulation";
-import { Redirect, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { UserContext } from "../context/User";
 
@@ -96,7 +96,7 @@ const Articles = ({ topics }) => {
             </p>
 
             <button className="Articles__commentCount">
-              {article.comment_count} C
+              {article.comment_count} Comments
             </button>
           </Link>
         );
