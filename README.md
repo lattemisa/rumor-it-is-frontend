@@ -1,4 +1,26 @@
-# Getting Started with Create React App
+# Rumor It Is App - Front end
+
+## About Rumor It Is (RII)
+
+RII is online publishing platform with a worldwide readership.
+Backend - Checkout out [rumor-it-is.com](https://rumor-it-is.herokuapp.com/api/articles) for the newest articles in the database.
+Frontend - [N/A]
+
+
+### API Documentation
+
+API routes are summarized in [Documentation](http://rumor-it-is.herokuapp.com/api)
+
+## Prerequisites
+
+
+## Installation
+
+
+## Database
+
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
