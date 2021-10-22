@@ -15,12 +15,16 @@ const Nav = ({ topics, setTopics }) => {
 
   return (
     <nav className="Nav">
-      <Link to="/articles/trending">
+      <Link to="/articles/trending" className="Nav__topics">
         <h3>...trending</h3>
       </Link>
       {topics.map((topic, index) => {
         return (
-          <Link key={index} to={`/articles/${topic.slug}`}>
+          <Link
+            key={index}
+            to={`/articles/${topic.slug}`}
+            className="Nav__topics"
+          >
             <h4 className="Nav__topics">{topic.slug}</h4>
           </Link>
         );

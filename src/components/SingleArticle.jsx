@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { UserContext } from "../context/User";
-import { getArticle, getComments } from "../utils/api";
+import { getArticle } from "../utils/api";
 import { adjustDate } from "../utils/dataManipulation";
 import {
   BsFillArrowUpCircleFill,
@@ -10,25 +10,28 @@ import {
 import "../styles/SingleArticle.css";
 import { useCount } from "../hooks/useCount";
 import ListComments from "./ListComments";
+import Error from "./Error";
 
 const SingleArticle = () => {
   const { article_id } = useParams();
   const [article, setArticle] = useState({});
-  const [comments, setComments] = useState([]);
+  const [err, setError] = useState(null);
   const { isLoggedIn } = useContext(UserContext);
   const { count, setCount, incCount, decCount } = useCount(article_id);
-  const [comment, setComment] = useState("");
 
   useEffect(() => {
-    getArticle(article_id).then((article) => {
-      setArticle(article);
-      setCount(article.votes);
-    });
-    getComments(article_id).then((comments) => {
-      setComments(comments);
-    });
-  }, [comment, article_id, setCount]);
+    setError(null);
+    getArticle(article_id)
+      .then((article) => {
+        setArticle(article);
+        setCount(article.votes);
+      })
+      .catch((err) => {
+        setError(err);
+      });
+  }, [article_id, setCount]);
 
+  if (err) return <Error setError={setError} err={err} />;
   return (
     <div className="Article__div">
       <section className="Article__header">
@@ -62,7 +65,7 @@ const SingleArticle = () => {
       </section>
       <h3 className=""></h3>
       <p className="Article__body">{article.body}</p>
-      <ListComments comments={comments} setComment={setComment} />
+      <ListComments />
     </div>
   );
 };

@@ -17,7 +17,7 @@ function App() {
         <Header />
         <Nav topics={topics} setTopics={setTopics} />
         <Switch>
-          <Route exact path="/articles">
+          <Route exact path="/">
             <Articles topics={topics} />
           </Route>
           <Route exact path="/login">
@@ -37,6 +37,9 @@ function App() {
           </Route>
           <Route exact path="/user">
             <Articles />
+          </Route>
+          <Route>
+            <p>404 - page not found</p>
           </Route>
         </Switch>
       </div>

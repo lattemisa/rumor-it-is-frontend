@@ -5,6 +5,7 @@ import { adjustDate } from "../utils/dataManipulation";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { UserContext } from "../context/User";
+import Error from "./Error";
 
 const Articles = ({ topics }) => {
   const { topic } = useParams();
@@ -15,7 +16,7 @@ const Articles = ({ topics }) => {
   const [filter, setFilter] = useState(orderAsc);
   const [articles, setArticles] = useState([]);
   const [topicDescription, setTopicDescription] = useState("Trending now...");
-  const [err, setErr] = useState(null);
+  const [err, setError] = useState(null);
 
   useEffect(() => {
     const query = JSON.parse(filter);
@@ -30,7 +31,7 @@ const Articles = ({ topics }) => {
         } else setArticles(articles);
       })
       .catch((err) => {
-        setErr(err);
+        setError(err);
       });
   }, [topic, filter]);
 
@@ -40,7 +41,9 @@ const Articles = ({ topics }) => {
         return t.slug === topic;
       });
       setTopicDescription(
-        description !== undefined && description[0].description
+        description !== undefined &&
+          description[0] &&
+          description[0].description
       );
     } else if (topic === "user") {
       setTopicDescription(`Hello ${user}`);
@@ -49,20 +52,8 @@ const Articles = ({ topics }) => {
       setTopicDescription("Trending now...");
     }
   };
-  if (err)
-    return (
-      <div>
-        <h3>{err}</h3>
-        <button
-          onClick={() => {
-            setErr(null);
-          }}
-        >
-          Go Back
-        </button>
-      </div>
-    );
 
+  if (err) return <Error setError={setError} err={err} />;
   return (
     <div className="Articles__article_card">
       <section className="Articles__topicAndFilter">

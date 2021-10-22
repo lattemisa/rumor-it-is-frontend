@@ -1,60 +1,40 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { UserContext } from "../context/User";
-import { deleteComment, postComment } from "../utils/api";
-import { getNumberOfDaysFromCreation } from "../utils/dataManipulation";
-import {
-  BsFillArrowUpCircleFill,
-  BsFillArrowDownCircleFill,
-} from "react-icons/bs";
-import { MdDeleteOutline } from "react-icons/md";
+import { postComment, getComments } from "../utils/api";
+import Error from "./Error";
 import "../styles/SingleArticle.css";
+import SingleComment from "./SingleComment";
 
-const ListComments = ({ comments, setComment }) => {
+const ListComments = () => {
   const { article_id } = useParams();
+  const [comments, setComments] = useState([]);
   const { user, isLoggedIn } = useContext(UserContext);
   const [addComment, setAddComment] = useState("");
   const [err, setError] = useState(null);
 
+  useEffect(() => {
+    getComments(article_id).then((comments) => {
+      setComments(comments);
+    });
+  });
+
   const postNewComment = (e) => {
     e.preventDefault();
-    postComment(article_id, user, addComment)
-      .then((res) => {
-        setComment(res);
-      })
-      .catch((err) => {
-        setError(err);
-      });
-    setAddComment("");
-  };
-
-  const handleCommentDeletion = (author, comment_id) => {
-    if (user === author) {
-      deleteComment(comment_id)
-        .then((res) => {
-          setComment(res);
-        })
+    if (addComment !== "") {
+      postComment(article_id, user, addComment)
+        .then((res) => {})
         .catch((err) => {
           setError(err);
         });
+      setAddComment("");
     } else {
-      setError(`${user} you cannot delete a comment of ${author}`);
+      setError("Add content to your comment.");
     }
   };
 
-  if (err)
-    return (
-      <div>
-        <h3>{err}</h3>
-        <button
-          onClick={() => {
-            setError(null);
-          }}
-        >
-          Go Back
-        </button>
-      </div>
-    );
+  if (err) return <Error setError={setError} err={err} />;
+
   return (
     <div>
       <section className="Article__commentSection">
@@ -82,36 +62,12 @@ const ListComments = ({ comments, setComment }) => {
             .map((comment) => {
               return (
                 <li key={comment.comment_id} type="none">
-                  <section className="Article__commentHeader">
-                    <img
-                      className="Article__userImage"
-                      src="https://static.independent.co.uk/s3fs-public/thumbnails/image/2020/05/01/08/avatar-sigourney-weaver.jpg"
-                      alt="user image"
-                    ></img>
-                    <p className="Article__author">{comment.author}</p>
-                    <p>
-                      {getNumberOfDaysFromCreation(comment.created_at)} days ago
-                    </p>
-                    <BsFillArrowUpCircleFill className="Article__commentVotingButton" />
-                    <p className="Article__author">{comment.votes} likes</p>
-                    <BsFillArrowDownCircleFill className="Article__commentVotingButton" />
-                    {isLoggedIn ? (
-                      <MdDeleteOutline
-                        disabled={user !== comment.author}
-                        className="Article__commentVotingButton"
-                        onClick={() => {
-                          handleCommentDeletion(
-                            comment.author,
-                            comment.comment_id
-                          );
-                        }}
-                      />
-                    ) : (
-                      <p></p>
-                    )}
-                  </section>
-
-                  <p>{comment.body}</p>
+                  <SingleComment
+                    comment={comment}
+                    comments={comments}
+                    setComments={setComments}
+                    setError={setError}
+                  />
                 </li>
               );
             })}

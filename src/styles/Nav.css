@@ -7,28 +7,26 @@
   cursor: pointer;
   font-size: large;
   text-decoration: none;
-  text-decoration-line: none;
 }
 
 h3 {
   text-decoration: none;
-  text-decoration-line: none;
   color: #264653;
+  text-decoration: none;
 }
 
 button:hover {
   background-color: #264653;
   color: #e9c46a;
 }
-h3:hover {
-  color: #e9c46a;
-}
+
 .Nav__topics {
   color: #264653;
-  text-decoration-line: none;
   text-decoration: none;
 }
-
+.Nav__topics:hover {
+  color: #e9c46a;
+}
 .Nav__topics:hover {
   color: #264653;
   color: #e9c46a;

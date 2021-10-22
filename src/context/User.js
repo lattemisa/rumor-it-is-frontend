@@ -10,7 +10,7 @@ export const UserProvider = ({ children }) => {
     if (previousUser) {
       setUser(previousUser);
     }
-  });
+  }, []);
   const login = (user) => {
     localStorage.setItem("loggedInUser", user);
   };

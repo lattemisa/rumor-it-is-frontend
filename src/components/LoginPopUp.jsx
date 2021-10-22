@@ -4,7 +4,7 @@ import { UserContext } from "../context/User";
 import "../styles/LoginPopUp.css";
 
 const LoginPopUp = () => {
-  const { user, setUser, isLoggedIn, login } = useContext(UserContext);
+  const { setUser, isLoggedIn, login } = useContext(UserContext);
   const [newUser, setNewUser] = useState("");
 
   const handleOnSubmit = (e) => {

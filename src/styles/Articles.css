@@ -56,6 +56,7 @@
   grid-template-rows: 40px;
   padding: 5px;
   box-shadow: #2a9d8f 5px 5px;
+  border: 2px solid #e9c46a;
 }
 .Articles__card:hover {
   background-color: white;
@@ -79,6 +80,11 @@
   border: none;
   justify-content: center;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #264653;
+}
+.Articles__votingButton:hover {
+  background-color: #2a9d8f;
+  color: #264653;
 }
 .Articles__dateAndAuthor {
   grid-area: "date";
@@ -106,6 +112,10 @@
   justify-content: center;
   color: white;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+.Articles__commentCount:hover {
+  color: white;
+  background-color: #264653;
 }
 
 @media only screen and (max-width: 600px) {
@@ -136,6 +146,7 @@
     grid-template-rows: 20px;
     padding: 5px;
     box-shadow: #2a9d8f 5px 5px;
+    border: 2px solid #e9c46a;
   }
   .Articles__card:hover {
     background-color: white;
