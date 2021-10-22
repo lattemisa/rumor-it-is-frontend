@@ -15,18 +15,23 @@ const Articles = ({ topics }) => {
   const [filter, setFilter] = useState(orderAsc);
   const [articles, setArticles] = useState([]);
   const [topicDescription, setTopicDescription] = useState("Trending now...");
+  const [err, setErr] = useState(null);
 
   useEffect(() => {
     const query = JSON.parse(filter);
     addHeader(query);
-    getArticles(topic, query).then((articles) => {
-      if (query.sort_by === "author") {
-        const authorsArticles = articles.filter((article) => {
-          return article.author === user;
-        });
-        setArticles(authorsArticles);
-      } else setArticles(articles);
-    });
+    getArticles(topic, query)
+      .then((articles) => {
+        if (query.sort_by === "author") {
+          const authorsArticles = articles.filter((article) => {
+            return article.author === user;
+          });
+          setArticles(authorsArticles);
+        } else setArticles(articles);
+      })
+      .catch((err) => {
+        setErr(err);
+      });
   }, [topic, filter]);
 
   const addHeader = (query) => {
@@ -44,6 +49,19 @@ const Articles = ({ topics }) => {
       setTopicDescription("Trending now...");
     }
   };
+  if (err)
+    return (
+      <div>
+        <h3>{err}</h3>
+        <button
+          onClick={() => {
+            setErr(null);
+          }}
+        >
+          Go Back
+        </button>
+      </div>
+    );
 
   return (
     <div className="Articles__article_card">

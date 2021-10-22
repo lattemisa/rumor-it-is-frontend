@@ -14,12 +14,17 @@ const ListComments = ({ comments, setComment }) => {
   const { article_id } = useParams();
   const { user, isLoggedIn } = useContext(UserContext);
   const [addComment, setAddComment] = useState("");
+  const [err, setError] = useState(null);
 
   const postNewComment = (e) => {
     e.preventDefault();
-    postComment(article_id, user, addComment).then((res) => {
-      setComment(res);
-    });
+    postComment(article_id, user, addComment)
+      .then((res) => {
+        setComment(res);
+      })
+      .catch((err) => {
+        setError(err);
+      });
     setAddComment("");
   };
 
@@ -30,10 +35,26 @@ const ListComments = ({ comments, setComment }) => {
           setComment(res);
         })
         .catch((err) => {
-          console.dir(err);
+          setError(err);
         });
+    } else {
+      setError(`${user} you cannot delete a comment of ${author}`);
     }
   };
+
+  if (err)
+    return (
+      <div>
+        <h3>{err}</h3>
+        <button
+          onClick={() => {
+            setError(null);
+          }}
+        >
+          Go Back
+        </button>
+      </div>
+    );
   return (
     <div>
       <section className="Article__commentSection">
