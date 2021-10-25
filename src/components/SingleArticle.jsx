@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { UserContext } from "../context/User";
-import { getArticle } from "../utils/api";
+import { getArticle, getUser, getUsers } from "../utils/api";
 import { adjustDate } from "../utils/dataManipulation";
 import {
   BsFillArrowUpCircleFill,
@@ -15,20 +15,25 @@ import Error from "./Error";
 const SingleArticle = () => {
   const { article_id } = useParams();
   const [article, setArticle] = useState({});
+  const [userImage, setUserImage] = useState("");
+  const [userName, setUserName] = useState("");
   const [err, setError] = useState(null);
-  const { isLoggedIn } = useContext(UserContext);
+  const { isLoggedIn, existingUsers, setExistingUsers } =
+    useContext(UserContext);
   const { count, setCount, incCount, decCount } = useCount(article_id);
 
   useEffect(() => {
     setError(null);
-    getArticle(article_id)
-      .then((article) => {
-        setArticle(article);
-        setCount(article.votes);
-      })
-      .catch((err) => {
-        setError(err);
+    getUsers().then((users) => {
+      setExistingUsers(users);
+    });
+    getArticle(article_id).then((article) => {
+      setArticle(article);
+      setCount(article.votes);
+      getUser(article.author).then((user) => {
+        setUserImage(user.avatar_url);
       });
+    });
   }, [article_id, setCount]);
 
   if (err) return <Error setError={setError} err={err} />;
@@ -54,11 +59,7 @@ const SingleArticle = () => {
         <p className="Article__topic">{article.topic}</p>
       </section>
       <section className="Article__dateAndAuthor">
-        <img
-          src="https://static.independent.co.uk/s3fs-public/thumbnails/image/2020/05/01/08/avatar-sigourney-weaver.jpg"
-          alt="user"
-          className="Article__authorImage"
-        />
+        <img src={userImage} alt="user" className="Article__authorImage" />
         <h3>
           By {article.author} on {adjustDate(article.created_at)}
         </h3>

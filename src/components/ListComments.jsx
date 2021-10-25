@@ -18,7 +18,6 @@ const ListComments = () => {
       setComments(comments);
     });
   });
-
   const postNewComment = (e) => {
     e.preventDefault();
     if (addComment !== "") {
@@ -41,15 +40,15 @@ const ListComments = () => {
         <h3>Comments</h3>
         {isLoggedIn && (
           <form onSubmit={postNewComment}>
-            <input
+            <textarea
               onChange={(e) => {
                 setAddComment(e.target.value);
               }}
               value={addComment}
               className="Article__addComment"
               type="text"
-              placeholder={`${user}, add your comment...`}
-            ></input>
+              placeholder={`${user.name}, add your comment...`}
+            ></textarea>
             <button type="submit">Add comment</button>
           </form>
         )}

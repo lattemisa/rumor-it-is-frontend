@@ -51,3 +51,13 @@ export const deleteComment = async (comment_id) => {
   const response = await rumorItIsApi.delete(`articles/${comment_id}`);
   return response;
 };
+
+export const getUsers = async () => {
+  const response = await rumorItIsApi.get(`users`);
+  return response.data.users;
+};
+
+export const getUser = async (user_id) => {
+  const response = await rumorItIsApi.get(`users/${user_id}`);
+  return response.data.user;
+};

@@ -9,7 +9,7 @@ import Error from "./Error";
 
 const Articles = ({ topics }) => {
   const { topic } = useParams();
-  const { user } = useContext(UserContext);
+  const { user, isLoggedIn } = useContext(UserContext);
   const orderAsc = JSON.stringify({ order: "asc" });
   const orderDesc = JSON.stringify({ order: "desc" });
   const sortByVotes = JSON.stringify({ sort_by: "votes" });
@@ -23,9 +23,9 @@ const Articles = ({ topics }) => {
     addHeader(query);
     getArticles(topic, query)
       .then((articles) => {
-        if (query.sort_by === "author") {
+        if (query.sort_by === "author" && user) {
           const authorsArticles = articles.filter((article) => {
-            return article.author === user;
+            return article.author === user.username;
           });
           setArticles(authorsArticles);
         } else setArticles(articles);
@@ -45,8 +45,8 @@ const Articles = ({ topics }) => {
           description[0] &&
           description[0].description
       );
-    } else if (topic === "user") {
-      setTopicDescription(`Hello ${user}`);
+    } else if (topic === "user" && isLoggedIn) {
+      setTopicDescription(`Hello ${user.name}`);
       query.sort_by = "author";
     } else {
       setTopicDescription("Trending now...");
@@ -62,7 +62,7 @@ const Articles = ({ topics }) => {
         ) : (
           <span className="Articles__topicDescription">
             <img
-              src="https://static.independent.co.uk/s3fs-public/thumbnails/image/2020/05/01/08/avatar-sigourney-weaver.jpg"
+              src={user.avatar_url}
               alt="user"
               className="Article__authorImage"
             />
